@@ -1,0 +1,3 @@
+rule-name,rule,type,logtext
+illegal bold tag,<b>,string,{{this-file}} contains {{rule-name}}
+self-closing input tag,/(<input)[^/]+(\/)>/g,regex,{{this-file}} contains {{rule-name}}

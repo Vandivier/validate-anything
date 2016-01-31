@@ -1,0 +1,13 @@
+{
+  "name": "validate-anything",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "node markup-validator"
+  },
+  "dependencies": {
+    "minimist": "~1.2.0",
+    "q": "~1.4.1",
+    "babyparse": "~0.4.3"
+  }
+}
