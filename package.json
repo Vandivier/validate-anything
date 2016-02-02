@@ -1,9 +1,9 @@
 {
   "name": "validate-anything",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "license": "MIT",
   "scripts": {
-    "start": "node markup-validator"
+    "start": "node validate-anything"
   },
   "dependencies": {
     "minimist": "~1.2.0",

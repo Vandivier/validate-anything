@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <p>
+    <b>Hello World!</b>
+  </p>
+  <div>
+    <input id="alertMe" placeholder="Type something here and click the button." style="width: 250px;"/>
+    <br>
+    <input onClick="alertIt()" type="submit" value="Submit"/>
+  </div>
+  <script>
+  function alertIt() {
+      alert(document.getElementById("alertMe").value);
+  }
+  </script>
+</body>
+</html>

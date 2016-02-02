@@ -1,3 +1,5 @@
-rule-name,rule,type,logtext
-illegal bold tag,<b>,string,{{this-file}} contains {{rule-name}}
-self-closing input tag,/(<input)[^/]+(\/)>/g,regex,{{this-file}} contains {{rule-name}}
+ruleName,rule,ruleType,ext,module,logText
+illegal bold tag,<b>,string,html,html5,{{thisFile}} contains {{ruleName}}
+self-closing input tag,/(<input)[^/]+(\/)>/g,regex,html,html5,{{thisFile}} contains {{ruleName}}
+illegal inline-style,style=,string,html,html5,{{thisFile}} contains {{ruleName}}
+illegal <br>,<br>,string,html,xhtml,{{thisFile}} contains {{ruleName}}
