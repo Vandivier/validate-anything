@@ -24,28 +24,30 @@ switch (argv._[0]) {
 }
 
 function listFiles() {
-  let target = dir('./').dirs;
+  //todo: allow recursively discover files in child folders.
+  let files = dir('./').files;
   
-  fs.writeFile('list.csv', target.join('\n'), 'utf8', function (err) {
+  fs.writeFile('list.csv', files.join('\n'), 'utf8', function (err) {
     if (err) {
       console.log('\n\rERROR: listFiles()' + err);
     } else {
       console.log('\n\rSuccesfully generated form-list.csv.');
-      console.log('\n\r '+ target.length +' files were listed.');
+      console.log('\n\r '+ files.length +' files were listed.');
     }
   });
 }
 
 function qualityCheck(argv) {
-    let path = false || './',//todo: instead of false let it be a CLI-passable parameter
-    dirContent = dir(path),
+    let path = argv._[1] || './',
+    dirContent = dir(path),//todo: dir(path, recursive);
     dirs = dirContent.dirs,
     files = dirContent.files,
+    filePaths = dirContent.filePaths,
     logfile = fs.createWriteStream("logfile.txt"),
     rules = getRules();
     
-    for (let file of files) {
-      _compare(rules, file);
+    for (let flp of filePaths) {
+      _compare(rules, flp)
     }
     
     function getRules() {
@@ -107,15 +109,14 @@ function qualityCheck(argv) {
     }
     
     function _compare(rules, filePath) {
-      console.log(filePath);
+      //console.log(filePath + ' = filePath in _compare()');
       //console.log(rules);
-      let test = 'test\\test3.html';
       
       //todo: any such thing as a chunk index? I would like to know which chunk in file has problem...
-      fs.createReadStream(/*filePath*/test, {encoding: 'utf-8'}).on('data', (chunk) => {
+      fs.createReadStream(filePath, {encoding: 'utf-8'}).on('data', (chunk) => {
         for (let rule of rules) {
-          //rule(chunk, filePath);
-          rule(chunk, test);
+          rule(chunk, filePath);
+          //rule(chunk, test);
         }
       });
       
@@ -132,14 +133,26 @@ function qualityCheck(argv) {
 }
 
 function dir(srcpath) {
-  //files and subdirectories, like the CLI command 'dir'
   var ret = {};
+  ret.dirpaths = [];
+  ret.filePaths = [];
   
   ret.dirs = fs.readdirSync(srcpath).filter(function(file) {
-    return fs.statSync(path.join(srcpath, file)).isDirectory();
+    let isDir = fs.statSync(path.join(srcpath, file)).isDirectory();
+    if(isDir) {
+      ret.dirpaths.push(path.join(srcpath, file));
+      return file;
+    }
   });
+  
   ret.files = fs.readdirSync(srcpath).filter(function(file) {
-    return fs.statSync(path.join(srcpath, file)).isFile();
+    let filePath = path.join(srcpath, file);
+    let isFile = fs.statSync(filePath).isFile();
+    if(isFile) {
+      ret.filePaths.push(filePath);
+      return file;
+    }
   });
+  
   return ret;
 }

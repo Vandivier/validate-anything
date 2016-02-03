@@ -1,5 +1,8 @@
+.gitattributes
+.gitignore
 list.csv
 logfile.txt
 package.json
+README.md
 validate-anything.csv
 validate-anything.js

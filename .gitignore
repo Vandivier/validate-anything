@@ -47,3 +47,5 @@ Temporary Items
 .apdisk
 
 my-markup/
+node_modules/
+list.csv
